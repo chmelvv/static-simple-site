@@ -5,7 +5,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
- containers:
+  containers:
   # Test container
   - name: tester
     image: python:3.9-slim

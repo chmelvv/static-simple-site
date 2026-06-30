@@ -41,6 +41,10 @@ spec:
         }
     }
 
+    triggers {
+        githubPush() # monitors GitHub for push events to trigger the pipeline
+    }
+
     environment {
         IMAGE_TAG = "v${env.BUILD_NUMBER}"
         REGISTRY_IMAGE = "chmelvv/myapp"

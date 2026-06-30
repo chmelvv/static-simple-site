@@ -83,18 +83,16 @@ spec:
             steps {
                 container('tester') {
                     script {
-                        sh """
+                        sh '''
                             # Configure Git credentials for the local commit history
                             git config --global user.email "jenkins-ci@example.com"
                             git config --global user.name "Jenkins CI"
                             
                             # Clone the infrastructure repository securely using the token
-                            git clone https://${GITHUB_USER}:${GITHUB_TOKEN}@${GITOPS_REPO} gitops-repo
+                            git clone https://${GITHUB_USER}:${GITHUB_TOKEN}@${GITOPS_REPO} gitops-dir
                             cd gitops-dir/gitops-repo/app
-                
                             
                             # Dynamically update the image tag in deployment.yaml
-                            # NOTE: Verify the path/name matches your file in devops-examples
                             sed -i "s|${REGISTRY_IMAGE}:.*|${REGISTRY_IMAGE}:${IMAGE_TAG}|g" deployment.yaml
                             
                             # Check if the file actually changed to avoid empty commits
@@ -106,7 +104,7 @@ spec:
                                 git push origin main
                                 echo "Successfully updated GitOps repository with tag ${IMAGE_TAG}"
                             fi
-                        """
+                        '''
                     }
                 }
             }
